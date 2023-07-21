@@ -34,7 +34,7 @@ public class HitMapper implements RowMapper<Hit> {
         hit.setApp(rs.getString("app"));
         hit.setUri(rs.getString("uri"));
         hit.setIp(rs.getString("ip"));
-        hit.setTimestamp(rs.getTimestamp("time_date").toLocalDateTime());
+        hit.setTimestamp(rs.getTimestamp("time_date"));
         return hit;
     }
 }

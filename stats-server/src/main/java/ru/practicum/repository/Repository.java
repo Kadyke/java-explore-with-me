@@ -1,5 +1,6 @@
 package ru.practicum.repository;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -11,6 +12,8 @@ import ru.practicum.model.Stat;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -23,13 +26,13 @@ public class Repository {
 
     public Hit save(Hit hit) {
         Long id = getId(hit.getApp());
-        jdbcTemplate.update("UPDATE hits SET uri = ?, ip = ?, time_date = ? WHERE id = ?;", hit.getUri(),
-                hit.getIp(), hit.getTimestamp().toString(), id);
+        jdbcTemplate.update("UPDATE hits SET uri = ?, ip = ?, time_date = ?" +
+                        " WHERE id = ?;", hit.getUri(), hit.getIp(), hit.getTimestamp(), id);
         return jdbcTemplate.queryForObject("SELECT * FROM hits WHERE id = ?", new HitMapper(), id);
     }
 
     public List<Stat> getStats() {
-        return jdbcTemplate.query("SELECT app, uri, COUNT(id) AS hits FROM hits GROUP BY app;", new StatMapper());
+        return jdbcTemplate.query("SELECT app, uri, COUNT(id) AS hits FROM hits GROUP BY app, uri;", new StatMapper());
     }
 
     private Long getId(String message) {
@@ -40,6 +43,6 @@ public class Repository {
             ps.setString(1, message);
             return ps;
         }, keyHolder);
-        return (Long) keyHolder.getKey();
+        return (Long) keyHolder.getKeys().get("id");
     }
 }

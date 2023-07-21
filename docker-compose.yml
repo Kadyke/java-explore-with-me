@@ -9,7 +9,7 @@ services:
     depends_on:
       - stats-server
     environment:
-      - SERVICE_URL=http://stats-service:7070
+      - SERVICE_URL=http://stats-server:7070
 
   stats-server:
     build: stats-server
