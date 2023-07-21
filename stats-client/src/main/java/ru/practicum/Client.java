@@ -28,7 +28,7 @@ public class Client {
         return makeAndSendRequest(HttpMethod.GET, "/stats", null);
     }
 
-    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable T body) {
+    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, T body) {
         HttpEntity<T> requestEntity = new HttpEntity<>(body);
         ResponseEntity<Object> shareitServerResponse;
         try {
