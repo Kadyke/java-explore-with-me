@@ -7,7 +7,6 @@ import ru.practicum.mapper.HitMapper;
 import ru.practicum.model.Stat;
 import ru.practicum.service.Service;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
