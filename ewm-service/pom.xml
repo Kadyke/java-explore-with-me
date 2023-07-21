@@ -7,7 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>server</artifactId>
+    <artifactId>ewm-service</artifactId>
     <packaging>jar</packaging>
 
     <name>server</name>

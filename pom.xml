@@ -14,7 +14,7 @@
 	<modules>
 		<module>stats-client</module>
 		<module>stats-server</module>
-		<module>server</module>
+		<module>ewm-service</module>
 	</modules>
 
 	<groupId>ru.practicum</groupId>
