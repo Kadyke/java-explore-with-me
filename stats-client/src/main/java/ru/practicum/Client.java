@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import java.util.List;
+
 @Component
 public class Client {
     private final RestTemplate rest;
@@ -24,11 +26,11 @@ public class Client {
     }
 
     public ResponseEntity<Object> getStats() {
-        return makeAndSendRequest(HttpMethod.GET, "/stats");
+        return makeAndSendRequest(HttpMethod.GET, "/stats", null);
     }
 
     private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, Object body) {
-        HttpEntity<Object> requestEntity = requestEntity = new HttpEntity<>(body);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(body, defaultHeaders());
         ResponseEntity<Object> response;
         try {
             response = rest.exchange(path, method, requestEntity, Object.class);
@@ -38,15 +40,11 @@ public class Client {
         return prepareGatewayResponse(response);
     }
 
-    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path) {
-        HttpEntity<Object> requestEntity = new HttpEntity<>(null);
-        ResponseEntity<Object> response;
-        try {
-            response = rest.exchange(path, method, requestEntity, Object.class);
-        } catch (HttpStatusCodeException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
-        }
-        return prepareGatewayResponse(response);
+    private HttpHeaders defaultHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        return headers;
     }
 
     private static ResponseEntity<Object> prepareGatewayResponse(ResponseEntity<Object> response) {
