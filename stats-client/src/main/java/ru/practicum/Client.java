@@ -1,5 +1,6 @@
 package ru.practicum;
 
+import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -27,7 +28,7 @@ public class Client {
         return makeAndSendRequest(HttpMethod.GET, "/stats", null);
     }
 
-    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, Object body) {
+    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Object body) {
         HttpEntity<Object> requestEntity;
         if (body == null) {
             requestEntity = new HttpEntity<>(null);
