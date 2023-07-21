@@ -13,7 +13,7 @@
 	<name>Explore With Me</name>
 	<modules>
 		<module>stats-client</module>
-		<module>stats-service</module>
+		<module>stats-server</module>
 		<module>server</module>
 	</modules>
 
