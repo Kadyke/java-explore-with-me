@@ -1,6 +1,5 @@
 package ru.practicum;
 
-import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -25,16 +24,22 @@ public class Client {
     }
 
     public ResponseEntity<Object> getStats() {
-        return makeAndSendRequest(HttpMethod.GET, "/stats", null);
+        return makeAndSendRequest(HttpMethod.GET, "/stats");
     }
 
-    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Object body) {
-        HttpEntity<Object> requestEntity;
-        if (body == null) {
-            requestEntity = new HttpEntity<>(null);
-        } else {
-            requestEntity = new HttpEntity<>(body);
+    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, Object body) {
+        HttpEntity<Object> requestEntity = requestEntity = new HttpEntity<>(body);
+        ResponseEntity<Object> response;
+        try {
+            response = rest.exchange(path, method, requestEntity, Object.class);
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
         }
+        return prepareGatewayResponse(response);
+    }
+
+    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path) {
+        HttpEntity<Object> requestEntity = new HttpEntity<>(null);
         ResponseEntity<Object> response;
         try {
             response = rest.exchange(path, method, requestEntity, Object.class);
