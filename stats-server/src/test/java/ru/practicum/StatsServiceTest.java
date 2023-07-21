@@ -17,6 +17,7 @@ public class StatsServiceTest {
     @Autowired
     private Service service;
     private final EasyRandom random = new EasyRandom();
+
     @Test
     void test() {
         Hit hit = random.nextObject(Hit.class);
