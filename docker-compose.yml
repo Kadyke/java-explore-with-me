@@ -7,7 +7,7 @@ services:
     ports:
       - "9090:9090"
     depends_on:
-      - stats-service
+      - stats-server
     environment:
       - SERVICE_URL=http://stats-service:7070
 
