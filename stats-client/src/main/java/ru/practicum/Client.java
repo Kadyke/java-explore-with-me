@@ -27,15 +27,20 @@ public class Client {
         return makeAndSendRequest(HttpMethod.GET, "/stats", null);
     }
 
-    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, T body) {
-        HttpEntity<T> requestEntity = new HttpEntity<>(body);
-        ResponseEntity<Object> shareitServerResponse;
+    private ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, Object body) {
+        HttpEntity<Object> requestEntity;
+        if (body == null) {
+            requestEntity = new HttpEntity<>(null);
+        } else {
+            requestEntity = new HttpEntity<>(body);
+        }
+        ResponseEntity<Object> response;
         try {
-            shareitServerResponse = rest.exchange(path, method, requestEntity, Object.class);
+            response = rest.exchange(path, method, requestEntity, Object.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
         }
-        return prepareGatewayResponse(shareitServerResponse);
+        return prepareGatewayResponse(response);
     }
 
     private static ResponseEntity<Object> prepareGatewayResponse(ResponseEntity<Object> response) {
