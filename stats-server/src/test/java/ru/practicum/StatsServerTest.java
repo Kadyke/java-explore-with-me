@@ -1,9 +1,11 @@
 package ru.practicum;
 
 import org.jeasy.random.EasyRandom;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.model.Hit;
 import ru.practicum.model.Stat;
 import ru.practicum.service.StatsService;
@@ -21,6 +23,7 @@ public class StatsServerTest {
     private final EasyRandom random = new EasyRandom();
 
     @Test
+    @DirtiesContext
     void test() {
         Hit hit = random.nextObject(Hit.class);
         hit.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
@@ -49,6 +52,7 @@ public class StatsServerTest {
     }
 
     @Test
+    @DirtiesContext
     void testSort() {
         Hit hit = random.nextObject(Hit.class);
         hit.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
