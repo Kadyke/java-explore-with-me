@@ -11,6 +11,7 @@ import ru.practicum.service.StatsService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,10 +61,15 @@ public class StatsServerTest {
         Hit otherHit = random.nextObject(Hit.class);
         otherHit.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         statsService.saveHit(otherHit);
+        List<String> uris = new ArrayList<>();
+        uris.add(hit.getUri());
+        uris.add(otherHit.getUri());
         List<Stat> stats = statsService.getStats(Timestamp.valueOf(LocalDateTime.now()),
-                Timestamp.valueOf(LocalDateTime.now().minusHours(1)), false);
+                Timestamp.valueOf(LocalDateTime.now().minusHours(1)), uris, false);
         assertEquals(2, stats.size());
         assertEquals(hit.getApp(), stats.get(0).getApp());
+        assertEquals(2, stats.get(0).getHits());
         assertEquals(otherHit.getApp(), stats.get(1).getApp());
+        assertEquals(1, stats.get(1).getHits());
     }
 }

@@ -35,11 +35,11 @@ public class StatsService {
             for (String uri : uris) {
                 stats.addAll(repository.getStatsWithUniqueIp(end, start, uri));
             }
-            return stats;
+            return stats.stream().sorted((o1, o2) -> (int) (o2.getHits() - o1.getHits())).collect(toList());
         }
         for (String uri : uris) {
             stats.addAll(repository.getStatsWithAllIp(end, start, uri));
         }
-        return stats.stream().sorted((o1, o2) -> (int) (o1.getHits() - o2.getHits())).collect(toList());
+        return stats.stream().sorted((o1, o2) -> (int) (o2.getHits() - o1.getHits())).collect(toList());
     }
 }
