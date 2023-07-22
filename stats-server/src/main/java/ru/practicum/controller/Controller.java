@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.HitDto;
 import ru.practicum.mapper.HitMapper;
 import ru.practicum.model.Stat;
-import ru.practicum.service.Service;
+import ru.practicum.service.StatsService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -15,16 +15,16 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class Controller {
-    private final Service service;
+    private final StatsService statsService;
 
-    public Controller(Service service) {
-        this.service = service;
+    public Controller(StatsService statsService) {
+        this.statsService = statsService;
     }
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public HitDto saveHit(@RequestBody HitDto hitDto) {
-        return HitMapper.toHitDto(service.saveHit(HitMapper.toHit(hitDto)));
+        return HitMapper.toHitDto(statsService.saveHit(HitMapper.toHit(hitDto)));
     }
 
     @GetMapping("/stats")
@@ -33,8 +33,8 @@ public class Controller {
                                @RequestParam(required = false) List<String> uris,
                                @RequestParam(defaultValue = "false") Boolean unique) {
         if (uris == null) {
-            return service.getStats(Timestamp.valueOf(end), Timestamp.valueOf(start), unique);
+            return statsService.getStats(Timestamp.valueOf(end), Timestamp.valueOf(start), unique);
         }
-        return service.getStats(Timestamp.valueOf(end), Timestamp.valueOf(start), uris, unique);
+        return statsService.getStats(Timestamp.valueOf(end), Timestamp.valueOf(start), uris, unique);
     }
 }

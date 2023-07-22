@@ -8,11 +8,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @org.springframework.stereotype.Service
-public class Service {
+public class StatsService {
     private final Repository repository;
 
-    public Service(Repository repository) {
+    public StatsService(Repository repository) {
         this.repository = repository;
     }
 
@@ -38,6 +40,6 @@ public class Service {
         for (String uri : uris) {
             stats.addAll(repository.getStatsWithAllIp(end, start, uri));
         }
-        return stats;
+        return stats.stream().sorted((o1, o2) -> (int) (o1.getHits() - o2.getHits())).collect(toList());
     }
 }
