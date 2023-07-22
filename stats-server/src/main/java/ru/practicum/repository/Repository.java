@@ -11,6 +11,7 @@ import ru.practicum.model.Stat;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -28,9 +29,24 @@ public class Repository {
         return jdbcTemplate.queryForObject("SELECT * FROM hits WHERE id = ?", new HitMapper(), id);
     }
 
-    public List<Stat> getStats() {
-        return jdbcTemplate.query("SELECT app, uri, COUNT(id) AS hits FROM hits GROUP BY app, uri;",
-                new StatMapper());
+    public List<Stat> getStatsWithAllIp(Timestamp end, Timestamp start, String uri) {
+        return jdbcTemplate.query("SELECT app, uri, COUNT(ip) AS cip FROM hits WHERE time_date BETWEEN ? AND ? " +
+                        "GROUP BY app, uri HAVING uri = ? ORDER BY cip DESC;", new StatMapper(), start, end, uri);
+    }
+
+    public List<Stat> getStatsWithAllIp(Timestamp end, Timestamp start) {
+        return jdbcTemplate.query("SELECT app, uri, COUNT(ip) AS cip FROM hits WHERE time_date BETWEEN ? AND ? " +
+                "GROUP BY app, uri ORDER BY cip DESC;", new StatMapper(), start, end);
+    }
+
+    public List<Stat> getStatsWithUniqueIp(Timestamp end, Timestamp start, String uri) {
+        return jdbcTemplate.query("SELECT app, uri, COUNT(DISTINCT ip) AS cip FROM hits WHERE time_date BETWEEN ? " +
+                        "AND ? GROUP BY app, uri HAVING uri = ? ORDER BY cip DESC;", new StatMapper(), start, end, uri);
+    }
+
+    public List<Stat> getStatsWithUniqueIp(Timestamp end, Timestamp start) {
+        return jdbcTemplate.query("SELECT app, uri, COUNT(DISTINCT ip) AS cip FROM hits WHERE time_date BETWEEN ? " +
+                        "AND ? GROUP BY app, uri ORDER BY cip DESC;", new StatMapper(), start, end);
     }
 
     private Long getId(String message) {

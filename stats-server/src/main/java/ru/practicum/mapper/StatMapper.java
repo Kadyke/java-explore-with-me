@@ -12,7 +12,7 @@ public class StatMapper implements RowMapper<Stat> {
         Stat stat = new Stat();
         stat.setApp(rs.getString("app"));
         stat.setUri(rs.getString("uri"));
-        stat.setHits(rs.getLong("hits"));
+        stat.setHits(rs.getLong("cip"));
         return stat;
     }
 }
