@@ -13,13 +13,10 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HitDto {
-    @NotNull
     @NotBlank
     private String app;
-    @NotNull
     @NotBlank
     private String uri;
-    @NotNull
     @NotBlank
     private String ip;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

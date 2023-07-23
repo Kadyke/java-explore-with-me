@@ -5,7 +5,6 @@ import ru.practicum.model.Stat;
 import ru.practicum.repository.Repository;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -30,16 +29,9 @@ public class StatsService {
     }
 
     public List<Stat> getStats(Timestamp end, Timestamp start, List<String> uris, Boolean unique) {
-        List<Stat> stats = new ArrayList<>();
         if (unique) {
-            for (String uri : uris) {
-                stats.addAll(repository.getStatsWithUniqueIp(end, start, uri));
-            }
-            return stats.stream().sorted((o1, o2) -> (int) (o2.getHits() - o1.getHits())).collect(toList());
+            return repository.getStatsWithUniqueIp(end, start, uris);
         }
-        for (String uri : uris) {
-            stats.addAll(repository.getStatsWithAllIp(end, start, uri));
-        }
-        return stats.stream().sorted((o1, o2) -> (int) (o2.getHits() - o1.getHits())).collect(toList());
+        return repository.getStatsWithAllIp(end, start, uris);
     }
 }

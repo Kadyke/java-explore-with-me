@@ -1,13 +1,9 @@
 package ru.practicum;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -16,10 +12,8 @@ import java.util.Map;
 public class Client {
     private final RestTemplate rest;
 
-    public Client(@Value("${service.url}") String serviceUrl) {
-        RestTemplateBuilder builder = new RestTemplateBuilder();
-        this.rest = builder.uriTemplateHandler(new DefaultUriBuilderFactory(serviceUrl))
-                .requestFactory(HttpComponentsClientHttpRequestFactory::new).build();
+    public Client(RestTemplate restTemplate) {
+        this.rest = restTemplate;
     }
 
     public ResponseEntity<Object> saveHit(HitDto hitDto) {
