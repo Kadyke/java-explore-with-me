@@ -7,7 +7,6 @@ import ru.practicum.repository.Repository;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 
 @org.springframework.stereotype.Service
 public class StatsService {

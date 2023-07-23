@@ -8,6 +8,7 @@ import ru.practicum.mapper.HitMapper;
 import ru.practicum.model.Stat;
 import ru.practicum.service.StatsService;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,13 +24,16 @@ public class Controller {
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
-    public HitDto saveHit(@RequestBody HitDto hitDto) {
-        return HitMapper.toHitDto(statsService.saveHit(HitMapper.toHit(hitDto)));
+    public HttpStatus saveHit(@RequestBody @Valid HitDto hitDto) {
+        statsService.saveHit(HitMapper.toHit(hitDto));
+        return HttpStatus.CREATED;
     }
 
     @GetMapping("/stats")
-    public List<Stat> getStats(@RequestParam(name = "end") @DateTimeFormat(fallbackPatterns = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                               @RequestParam(name = "start") @DateTimeFormat(fallbackPatterns = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+    public List<Stat> getStats(@RequestParam(name = "end")
+                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                               @RequestParam(name = "start")
+                               @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
                                @RequestParam(required = false) List<String> uris,
                                @RequestParam(defaultValue = "false") Boolean unique) {
         if (uris == null) {
