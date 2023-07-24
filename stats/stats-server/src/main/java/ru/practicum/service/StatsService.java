@@ -1,18 +1,19 @@
 package ru.practicum.service;
 
+import org.springframework.stereotype.Service;
 import ru.practicum.yandex.Stat;
 import ru.practicum.model.Hit;
-import ru.practicum.repository.Repository;
+import ru.practicum.repository.StatsRepository;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 
-@org.springframework.stereotype.Service
+@Service
 public class StatsService {
-    private final Repository repository;
+    private final StatsRepository repository;
 
-    public StatsService(Repository repository) {
+    public StatsService(StatsRepository repository) {
         this.repository = repository;
     }
 

@@ -15,10 +15,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Component
-public class Repository {
+public class StatsRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public Repository(JdbcTemplate jdbcTemplate) {
+    public StatsRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
