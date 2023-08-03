@@ -15,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-public class Controller {
+public class StatsController {
     private final StatsService statsService;
 
-    public Controller(StatsService statsService) {
+    public StatsController(StatsService statsService) {
         this.statsService = statsService;
     }
 
