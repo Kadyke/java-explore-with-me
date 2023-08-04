@@ -25,7 +25,7 @@ services:
     environment:
       - SERVICE_URL=http://stats-server:9090
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-db:5432/main
+      - SPRING_DATASOURCE_URL=jdbc:h2://main-db:5432/main
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
 
