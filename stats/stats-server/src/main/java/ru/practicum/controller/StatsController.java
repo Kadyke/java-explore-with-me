@@ -3,6 +3,7 @@ package ru.practicum.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.exception.DateException;
 import ru.practicum.yandex.HitDto;
 import ru.practicum.yandex.Stat;
 import ru.practicum.mapper.HitMapper;
@@ -36,6 +37,9 @@ public class StatsController {
                                @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
                                @RequestParam(required = false) List<String> uris,
                                @RequestParam(defaultValue = "false") Boolean unique) {
+        if (end.isBefore(start)) {
+            throw new DateException();
+        }
         if (uris == null) {
             return statsService.getStats(Timestamp.valueOf(end), Timestamp.valueOf(start), unique);
         }
