@@ -13,7 +13,6 @@ import ru.practicum.model.State;
 import ru.practicum.model.User;
 import ru.practicum.repository.EventRepository;
 
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class EventService {
                 statesInString.add(state.toString());
             }
         }
-        return repository.getEvents(users, size, categories, from, statesInString, Timestamp.valueOf(rangeStart), Timestamp.valueOf(rangeStart));
+        return repository.getEvents(users, size, categories, from, statesInString, rangeStart, rangeEnd);
     }
 
     public Event updateEventByAdmin(Long id, Event event) {
@@ -129,12 +128,10 @@ public class EventService {
         }
         List<Event> events;
         if (onlyAvailable) {
-            events = repository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories,
-                    Timestamp.valueOf(rangeStart), Timestamp.valueOf(rangeEnd),
+            events = repository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories, rangeStart, rangeEnd,
                     size, from);
         } else {
-            events = repository.getPublicEventsSortByDate(text, paid, categories, Timestamp.valueOf(rangeStart),
-                    Timestamp.valueOf(rangeEnd), size, from);
+            events = repository.getPublicEventsSortByDate(text, paid, categories, rangeStart, rangeEnd, size, from);
         }
         if (sort.equals(Sort.VIEWS)) {
             return EventMapper.INSTANCE.collectionToEventShortDto(events).stream().sorted(
