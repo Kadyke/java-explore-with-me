@@ -13,10 +13,13 @@ import ru.practicum.model.State;
 import ru.practicum.model.User;
 import ru.practicum.repository.EventRepository;
 
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.util.stream.Collectors.toList;
 
@@ -25,6 +28,7 @@ public class EventService {
     private final EventRepository repository;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public EventService(EventRepository repository, UserService userService, CategoryService categoryService) {
         this.repository = repository;
@@ -70,7 +74,7 @@ public class EventService {
     }
 
     public List<Event> getEvents(List<Long> users, List<State> states, List<Long> categories, Integer from,
-                                 Integer size, LocalDateTime rangeStart, LocalDateTime rangeEnd) {
+                                 Integer size, Timestamp rangeStart, Timestamp rangeEnd) {
         List<String> statesInString = new ArrayList<>();
         if (states != null) {
             for (State state: states) {
@@ -78,6 +82,7 @@ public class EventService {
             }
         }
         return repository.getEvents(users, size, categories, from, statesInString, rangeStart, rangeEnd);
+
     }
 
     public Event updateEventByAdmin(Long id, Event event) {
@@ -128,10 +133,12 @@ public class EventService {
         }
         List<Event> events;
         if (onlyAvailable) {
-            events = repository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories, rangeStart, rangeEnd,
+            events = repository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories,
+                    Timestamp.valueOf(rangeStart), Timestamp.valueOf(rangeEnd),
                     size, from);
         } else {
-            events = repository.getPublicEventsSortByDate(text, paid, categories, rangeStart, rangeEnd, size, from);
+            events = repository.getPublicEventsSortByDate(text, paid, categories, Timestamp.valueOf(rangeStart),
+                    Timestamp.valueOf(rangeEnd), size, from);
         }
         if (sort.equals(Sort.VIEWS)) {
             return EventMapper.INSTANCE.collectionToEventShortDto(events).stream().sorted(

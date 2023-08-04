@@ -10,7 +10,7 @@ import ru.practicum.model.State;
 import ru.practicum.model.User;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> getEvents(@Param("ids") List<Long> ids, @Param("limit") Integer limit,
                           @Param("categories") List<Long> categories,
                           @Param("offset") Integer offset, @Param("states") List<String> states,
-                          @Param("rangeStart") LocalDateTime rangeStart, @Param("rangeEnd") LocalDateTime rangeEnd);
+                          @Param("rangeStart") Timestamp rangeStart, @Param("rangeEnd") Timestamp rangeEnd);
 
     @Transactional
     @Modifying
@@ -48,8 +48,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             " ORDER BY event_date LIMIT :limit OFFSET :offset ;", nativeQuery = true)
     List<Event> getPublicEventsSortByDate(@Param("text") String text, @Param("paid") Boolean paid,
                                                        @Param("categories") List<Long> categories,
-                                                       @Param("rangeStart") LocalDateTime rangeStart,
-                                                       @Param("rangeEnd") LocalDateTime rangeEnd,
+                                                       @Param("rangeStart") Timestamp rangeStart,
+                                                       @Param("rangeEnd") Timestamp rangeEnd,
                                                        @Param("limit") Integer limit, @Param("offset") Integer size);
 
     @Query(value = "SELECT * FROM events WHERE (:text IS NULL OR LOWER(annotation) LIKE :text OR " +
@@ -59,8 +59,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "OFFSET :offset ;", nativeQuery = true)
     List<Event> getPublicEventsOnlyAvailableSortByDate(@Param("text") String text, @Param("paid") Boolean paid,
                                           @Param("categories") List<Long> categories,
-                                          @Param("rangeStart") LocalDateTime rangeStart,
-                                          @Param("rangeEnd") LocalDateTime rangeEnd,
+                                          @Param("rangeStart") Timestamp rangeStart,
+                                          @Param("rangeEnd") Timestamp rangeEnd,
                                           @Param("limit") Integer limit, @Param("offset") Integer size);
 
     Optional<Event> findByIdAndState(Long id, State state);
