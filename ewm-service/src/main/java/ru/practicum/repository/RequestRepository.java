@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
     Optional<Request> findByRequesterAndEvent(User user, Event event);

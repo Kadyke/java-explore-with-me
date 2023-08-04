@@ -6,9 +6,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.practicum.model.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM users ORDER BY id ASC LIMIT ? OFFSET ?;", nativeQuery = true)
     List<User> getUserByLimit(Integer limit, Integer offset);

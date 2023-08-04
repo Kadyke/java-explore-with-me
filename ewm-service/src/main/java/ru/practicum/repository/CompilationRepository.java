@@ -6,9 +6,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.practicum.model.Compilation;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface CompilationRepository extends JpaRepository<Compilation, Long> {
 
     @Query(value = "SELECT * FROM compilations WHERE (:pinned IS NULL OR pinned = :pinned) " +

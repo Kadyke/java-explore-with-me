@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.practicum.model.Category;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT * FROM categories ORDER BY id ASC LIMIT ? OFFSET ?;", nativeQuery = true)
