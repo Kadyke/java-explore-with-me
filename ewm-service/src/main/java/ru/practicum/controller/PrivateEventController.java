@@ -2,6 +2,7 @@ package ru.practicum.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.StatsClient;
 import ru.practicum.dto.*;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.mapper.RequestMapper;
@@ -16,34 +17,46 @@ import java.util.List;
 public class PrivateEventController {
     private final EventService eventService;
     private final RequestService requestService;
+    private final StatsClient client;
 
-    public PrivateEventController(EventService eventService, RequestService requestService) {
+    public PrivateEventController(EventService eventService, RequestService requestService, StatsClient client) {
         this.eventService = eventService;
         this.requestService = requestService;
+        this.client = client;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto addNewEvent(@PathVariable Long userId, @RequestBody @Valid EventInputDto eventDto) {
-        return EventMapper.INSTANCE.toEventFullDto(eventService.createEvent(EventMapper.INSTANCE.toEvent(eventDto), userId));
+        EventFullDto eventFullDto = EventMapper.INSTANCE.toEventFullDto(eventService.createEvent
+                (EventMapper.INSTANCE.toEvent(eventDto), userId));
+        client.addViewsForEventFullDto(List.of(eventFullDto));
+        return eventFullDto;
     }
 
     @GetMapping("/{id}")
     public EventFullDto getUsersEvent(@PathVariable Long userId, @PathVariable Long id) {
-        return EventMapper.INSTANCE.toEventFullDto(eventService.getUsersEvent(userId, id));
+        EventFullDto eventFullDto = EventMapper.INSTANCE.toEventFullDto(eventService.getUsersEvent(userId, id));
+        client.addViewsForEventFullDto(List.of(eventFullDto));
+        return eventFullDto;
     }
     @GetMapping
     public List<EventShortDto> getUsersEvents(@PathVariable Long userId,
                                               @RequestParam(defaultValue = "0") Integer from,
                                               @RequestParam(defaultValue = "10") Integer size) {
-        return EventMapper.INSTANCE.collectionToEventShortDto(eventService.getUsersEvents(userId, from, size));
+        List<EventShortDto> eventShortDtos = EventMapper.INSTANCE.collectionToEventShortDto(
+                eventService.getUsersEvents(userId, from, size));
+        client.addViewsForEventShortDto(eventShortDtos);
+        return eventShortDtos;
     }
 
     @PatchMapping("/{id}")
     public EventFullDto updateEvent(@PathVariable Long userId, @PathVariable Long id,
                              @RequestBody @Valid EventUpdateDto eventUpdateDto) {
-        return EventMapper.INSTANCE.toEventFullDto(eventService.updateEventByUser(userId, id,
+        EventFullDto eventFullDto =  EventMapper.INSTANCE.toEventFullDto(eventService.updateEventByUser(userId, id,
                 EventMapper.INSTANCE.toEvent(eventUpdateDto)));
+        client.addViewsForEventFullDto(List.of(eventFullDto));
+        return eventFullDto;
     }
 
     @GetMapping("/{id}/requests")

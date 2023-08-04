@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
-    private Long id;
+public class CompilationNewDto {
+    private Set<Long> events;
+    private Boolean pinned = false;
     @NotBlank
     @Size(min = 1, max = 50)
-    private String name;
+    private String title;
 }

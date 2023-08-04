@@ -1,6 +1,7 @@
 package ru.practicum.validation;
 
 
+import ru.practicum.exception.BadRequestException;
 import ru.practicum.exception.EventDateException;
 
 import javax.validation.ConstraintValidator;
@@ -17,7 +18,7 @@ public class ValidatorEventDateMayBeNull implements ConstraintValidator<EventDat
         }
         LocalDateTime now = LocalDateTime.now();
         if (eventDate.isBefore(now)) {
-            throw new EventDateException("Дата события не может быть в прошлом.");
+            throw new BadRequestException("Дата события не может быть в прошлом.");
         }
         Duration duration = Duration.between(now, eventDate);
         if (duration.toHours() < 2) {

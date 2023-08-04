@@ -22,8 +22,10 @@ public class CompilationService {
 
 
     public Compilation createCompilation(Compilation compilation) {
-        compilation.setEvents(compilation.getEvents().stream().map(
-                event -> eventService.getEvent(event.getId())).collect(toSet()));
+        if (compilation.getEvents() != null) {
+            compilation.setEvents(compilation.getEvents().stream().map(
+                    event -> eventService.getEvent(event.getId())).collect(toSet()));
+        }
         return repository.save(compilation);
     }
 

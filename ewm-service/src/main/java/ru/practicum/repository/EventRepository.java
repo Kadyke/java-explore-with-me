@@ -23,8 +23,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByIdAndInitiator(Long id, User initiator);
 
     @Query(value = "SELECT * FROM events WHERE ((:ids) IS NULL OR user_id IN (:ids)) AND ((:states) IS NULL OR state " +
-            "IN (:states)) AND ((:categories) IS NULL OR category_id IN (:categories)) AND event_date " +
-            "BETWEEN :rangeStart AND :rangeEnd ORDER BY id LIMIT :limit OFFSET :offset ;", nativeQuery = true)
+            "IN (:states)) AND ((:categories) IS NULL OR category_id IN (:categories)) AND (:rangeStart IS NULL OR " +
+            "event_date > :rangeStart) AND (:rangeEnd IS NUll OR event_date < :rangeEnd) ORDER BY id LIMIT :limit " +
+            "OFFSET :offset ;", nativeQuery = true)
     List<Event> getEvents(@Param("ids") List<Long> ids, @Param("limit") Integer limit,
                           @Param("categories") List<Long> categories,
                           @Param("offset") Integer offset, @Param("states") List<String> states,

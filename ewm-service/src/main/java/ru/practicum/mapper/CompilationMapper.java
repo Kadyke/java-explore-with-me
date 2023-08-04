@@ -16,7 +16,9 @@ import java.util.Set;
 public interface CompilationMapper {
     CompilationMapper INSTANCE = Mappers.getMapper(CompilationMapper.class);
 
-    Compilation toCompilation(CompilationInputDto compilationInputDto);
+    Compilation toCompilation(CompilationNewDto compilationNewDto);
+
+    Compilation toCompilation(CompilationUpdateDto compilationNewDto);
 
     default Set<Event> toCompilation(Set<Long> eventIds) {
         if (eventIds == null) {

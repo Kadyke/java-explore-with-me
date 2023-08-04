@@ -2,16 +2,16 @@ package ru.practicum.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.StatsClient;
 import ru.practicum.dto.*;
+import ru.practicum.exception.BadRequestException;
+import ru.practicum.model.Location;
 import ru.practicum.model.Sort;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.service.EventService;
 import ru.practicum.service.RequestService;
-import ru.practicum.yandex.Client;
-import ru.practicum.yandex.HitDto;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,18 +19,19 @@ import java.util.List;
 @RequestMapping(path = "/events")
 public class PublicEventController {
     private final EventService eventService;
-    private final Client client;
+    private final StatsClient client;
 
-    public PublicEventController(EventService eventService, RequestService requestService) {
+    public PublicEventController(EventService eventService, RequestService requestService, StatsClient client) {
         this.eventService = eventService;
-        this.client = new Client("http://localhost:9090/");
+        this.client = client;
     }
 
     @GetMapping("/{id}")
     public EventFullDto getPublicEvent(@PathVariable Long id, HttpServletRequest request) {
-        client.saveHit(new HitDto("ewm-service", "/events" + id, request.getRemoteAddr(),
-                Timestamp.valueOf(LocalDateTime.now())));
-        return EventMapper.INSTANCE.toEventFullDto(eventService.getPublicEvent(id));
+        client.sendHit("/events/" + id, request);
+        EventFullDto eventFullDto = EventMapper.INSTANCE.toEventFullDto(eventService.getPublicEvent(id));
+        client.addViewsForEventFullDto(List.of(eventFullDto));
+        return eventFullDto;
     }
     @GetMapping
     public List<EventShortDto> getPublicEvents(@RequestParam(required = false) String text,
@@ -51,8 +52,14 @@ public class PublicEventController {
         if (rangeEnd == null) {
             rangeEnd = now.plusYears(10);
         }
-        client.saveHit(new HitDto("ewm-service", "/events", request.getRemoteAddr(), Timestamp.valueOf(now)));
-        return eventService.getPublicEvents(text, categories, paid, onlyAvailable, sort, rangeStart, rangeEnd, from, size);
+        if (rangeStart.isAfter(rangeEnd)) {
+            throw new BadRequestException("Дата начала не может быть позже даты конца.");
+        }
+        client.sendHit("/events", request);
+        List<EventShortDto> eventShortDtos =  eventService.getPublicEvents(text, categories, paid, onlyAvailable, sort,
+                rangeStart, rangeEnd, from, size);
+        client.addViewsForEventShortDto(eventShortDtos);
+        return eventShortDtos;
     }
 
 }

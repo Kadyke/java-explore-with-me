@@ -42,14 +42,26 @@ public class ExceptionController {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleEventAlreadyPublishedException(final EventAlreadyPublishedException e) {
-        return new ApiError(HttpStatus.FORBIDDEN, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
+        return new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleRequestAlreadyExistException(final RequestException e) {
+        return new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleBadRequestException(final BadRequestException e) {
+        return new ApiError(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleEventIsNotPendingException(final EventIsNotPendingException e) {
         return new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
     }
 }

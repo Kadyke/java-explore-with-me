@@ -2,6 +2,7 @@ package ru.practicum.service;
 
 import org.springframework.stereotype.Service;
 import ru.practicum.dto.EventShortDto;
+import ru.practicum.exception.EventIsNotPendingException;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.model.Sort;
 import ru.practicum.exception.EventAlreadyPublishedException;
@@ -82,10 +83,12 @@ public class EventService {
     public Event updateEventByAdmin(Long id, Event event) {
         Event oldEvent = repository.findById(id).orElseThrow(NotFoundException::new);
         if (oldEvent.getState() != State.PENDING) {
-            throw new EventAlreadyPublishedException();
+            throw new EventIsNotPendingException();
         }
-        if (event.getCategory() != null) {
+        if (event.getCategory().getId() != null) {
             event.setCategory(categoryService.getCategory(event.getCategory().getId()));
+        } else {
+            event.setCategory(null);
         }
         if (event.getState() == State.PUBLISHED) {
             LocalDateTime now = LocalDateTime.now();
@@ -97,10 +100,9 @@ public class EventService {
             oldEvent.setPublishedOn(now);
             return repository.save(oldEvent);
         }
+        oldEvent.update(event);
         return repository.save(oldEvent);
     }
-
-
 
     Event getEvent(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);

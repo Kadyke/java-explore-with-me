@@ -2,9 +2,10 @@ package ru.practicum.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.dto.CompilationUpdateDto;
 import ru.practicum.service.CompilationService;
 import ru.practicum.dto.CompilationDto;
-import ru.practicum.dto.CompilationInputDto;
+import ru.practicum.dto.CompilationNewDto;
 import ru.practicum.mapper.CompilationMapper;
 
 import javax.validation.Valid;
@@ -20,21 +21,22 @@ public class AdminCompilationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CompilationDto addNewCompilation(@RequestBody @Valid CompilationInputDto compilationInputDto) {
+    public CompilationDto addNewCompilation(@RequestBody @Valid CompilationNewDto compilationNewDto) {
         return CompilationMapper.INSTANCE.toCompilationDto(service.createCompilation(
-                CompilationMapper.INSTANCE.toCompilation(compilationInputDto)));
+                CompilationMapper.INSTANCE.toCompilation(compilationNewDto)));
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public HttpStatus deleteCompilation(@PathVariable Long id) {
         service.deleteCompilation(id);
         return HttpStatus.NO_CONTENT;
     }
 
     @PatchMapping("/{id}")
-    public CompilationDto changeCompilation(@PathVariable Long id,
-                                            @RequestBody CompilationInputDto compilationInputDto) {
+    public CompilationDto changeCompilation(@PathVariable Long id, @Valid
+                                            @RequestBody CompilationUpdateDto compilationUpdateDto) {
         return CompilationMapper.INSTANCE.toCompilationDto(service.upadteCompilation(
-                CompilationMapper.INSTANCE.toCompilation(compilationInputDto), id));
+                CompilationMapper.INSTANCE.toCompilation(compilationUpdateDto), id));
     }
 }

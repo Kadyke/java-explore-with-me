@@ -44,7 +44,7 @@ public class RequestService {
         request.setCreated(LocalDateTime.now());
         request.setRequester(user);
         request.setEvent(event);
-        if (event.getRequestModeration()) {
+        if (event.getRequestModeration() && event.getParticipantLimit() != 0) {
             request.setStatus(Status.PENDING);
         } else {
             request.setStatus(Status.CONFIRMED);
@@ -62,12 +62,12 @@ public class RequestService {
         User user = userService.getUser(userId);
         Request request = repository.findById(id).orElseThrow(NotFoundException::new);
         if (!user.equals(request.getRequester())) {
-            throw new RequestException("Можно только отменять собственные заявки.");
+            throw new RequestException("Можно отменять только собственные заявки.");
         }
         if (request.getStatus().equals(Status.CONFIRMED)) {
             eventService.decreaseConfirmedRequest(request.getEvent().getId());
         }
-        request.setStatus(Status.REJECTED);
+        request.setStatus(Status.CANCELED);
         return repository.save(request);
     }
 
