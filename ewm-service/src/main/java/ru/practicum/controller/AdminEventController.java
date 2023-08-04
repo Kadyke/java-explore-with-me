@@ -10,7 +10,6 @@ import ru.practicum.model.State;
 import ru.practicum.service.EventService;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,8 +35,8 @@ public class AdminEventController {
                                         @RequestParam(required = false)
                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd) {
         List<EventFullDto> eventFullDtos = EventMapper.INSTANCE.collectionToEventFullDto(
-                service.getEvents(users, states, categories, from, size, Timestamp.valueOf(rangeStart),
-                        Timestamp.valueOf(rangeEnd)));
+                service.getEvents(users, states, categories, from, size, rangeStart,
+                        rangeEnd));
         client.addViewsForEventFullDto(eventFullDtos);
         return eventFullDtos;
     }

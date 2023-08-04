@@ -11,6 +11,7 @@ import ru.practicum.model.User;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> getEvents(@Param("ids") List<Long> ids, @Param("limit") Integer limit,
                           @Param("categories") List<Long> categories,
                           @Param("offset") Integer offset, @Param("states") List<String> states,
-                          @Param("rangeStart") Timestamp rangeStart, @Param("rangeEnd") Timestamp rangeEnd);
+                          @Param("rangeStart") LocalDateTime rangeStart, @Param("rangeEnd") LocalDateTime rangeEnd);
 
     @Transactional
     @Modifying

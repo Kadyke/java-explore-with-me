@@ -73,7 +73,7 @@ public class EventService {
     }
 
     public List<Event> getEvents(List<Long> users, List<State> states, List<Long> categories, Integer from,
-                                 Integer size, Timestamp rangeStart, Timestamp rangeEnd) {
+                                 Integer size, LocalDateTime rangeStart, LocalDateTime rangeEnd) {
         List<String> statesInString = new ArrayList<>();
         if (states != null) {
             for (State state: states) {
