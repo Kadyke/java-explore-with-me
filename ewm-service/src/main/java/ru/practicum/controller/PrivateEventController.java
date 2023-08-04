@@ -28,8 +28,8 @@ public class PrivateEventController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto addNewEvent(@PathVariable Long userId, @RequestBody @Valid EventInputDto eventDto) {
-        EventFullDto eventFullDto = EventMapper.INSTANCE.toEventFullDto(eventService.createEvent
-                (EventMapper.INSTANCE.toEvent(eventDto), userId));
+        EventFullDto eventFullDto = EventMapper.INSTANCE.
+                toEventFullDto(eventService.createEvent(EventMapper.INSTANCE.toEvent(eventDto), userId));
         client.addViewsForEventFullDto(List.of(eventFullDto));
         return eventFullDto;
     }
@@ -40,6 +40,7 @@ public class PrivateEventController {
         client.addViewsForEventFullDto(List.of(eventFullDto));
         return eventFullDto;
     }
+
     @GetMapping
     public List<EventShortDto> getUsersEvents(@PathVariable Long userId,
                                               @RequestParam(defaultValue = "0") Integer from,

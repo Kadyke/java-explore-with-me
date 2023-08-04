@@ -35,7 +35,7 @@ public class AdminUserController {
     public List<UserDto> getUsers(@RequestParam(defaultValue = "0") Integer from,
                                   @RequestParam(defaultValue = "10") Integer size,
                                   @RequestParam(required = false) List<Long> ids) {
-        if (ids == null){
+        if (ids == null) {
             return UserMapper.INSTANCE.collectionToUserDto(service.getUsers(from, size));
         }
         return UserMapper.INSTANCE.collectionToUserDto(service.getUsers(from, size, ids));

@@ -34,6 +34,7 @@ public class UserService {
             throw new NotFoundException();
         }
     }
+
     public Collection<User> getUsers(Integer from, Integer size) {
         return repository.getUserByLimit(size, from);
     }

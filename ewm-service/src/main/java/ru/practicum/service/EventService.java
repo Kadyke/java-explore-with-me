@@ -107,6 +107,7 @@ public class EventService {
     Event getEvent(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
+
     void increaseConfirmedRequest(Long id) {
         repository.increaseConfirmedRequest(id);
     }
@@ -114,6 +115,7 @@ public class EventService {
     void decreaseConfirmedRequest(Long id) {
         repository.decreaseConfirmedRequest(id);
     }
+
     void saveEvent(Event event) {
         repository.save(event);
     }

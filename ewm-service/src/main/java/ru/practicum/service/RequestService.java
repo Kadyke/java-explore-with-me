@@ -89,7 +89,7 @@ public class RequestService {
         List<Request> confirmedRequests = new ArrayList<>();
         List<Request> rejectedRequests = new ArrayList<>();
         if (responseToRequest.getStatus().equals(Status.CONFIRMED) && event.getParticipantLimit() != 0) {
-            if (event.getConfirmedRequests().equals(event.getParticipantLimit()) ) {
+            if (event.getConfirmedRequests().equals(event.getParticipantLimit())) {
                 throw new RequestException("Нет свободных мест для участия.");
             }
             Boolean isFull = false;

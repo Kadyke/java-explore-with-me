@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.client.StatsClient;
 import ru.practicum.dto.*;
 import ru.practicum.exception.BadRequestException;
-import ru.practicum.model.Location;
 import ru.practicum.model.Sort;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.service.EventService;
@@ -33,6 +32,7 @@ public class PublicEventController {
         client.addViewsForEventFullDto(List.of(eventFullDto));
         return eventFullDto;
     }
+
     @GetMapping
     public List<EventShortDto> getPublicEvents(@RequestParam(required = false) String text,
                                                @RequestParam(required = false) List<Long> categories,
