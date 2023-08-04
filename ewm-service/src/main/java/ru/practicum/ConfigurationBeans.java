@@ -9,7 +9,7 @@ import ru.practicum.yandex.Client;
 public class ConfigurationBeans {
 
     @Bean
-    public Client client(@Value("${service.url}") String serviceUrl) {;
+    public Client client(@Value("${service.url}") String serviceUrl) {
         return new Client(serviceUrl);
     }
 }
