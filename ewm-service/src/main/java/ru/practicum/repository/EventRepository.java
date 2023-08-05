@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query(value = "SELECT * FROM events WHERE user_id = ? ORDER BY id ASC LIMIT ? OFFSET ?;", nativeQuery = true)

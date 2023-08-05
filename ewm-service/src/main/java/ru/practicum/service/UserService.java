@@ -3,6 +3,7 @@ package ru.practicum.service;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.model.User;
 import ru.practicum.repository.UserRepository;
 import ru.practicum.exception.EmailAlreadyExistException;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository repository;
 

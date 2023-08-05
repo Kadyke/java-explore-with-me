@@ -1,6 +1,7 @@
 package ru.practicum.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.EventShortDto;
 import ru.practicum.exception.EventIsNotPendingException;
 import ru.practicum.mapper.EventMapper;
@@ -22,6 +23,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@Transactional(readOnly = true)
 public class EventService {
     private final EventRepository repository;
     private final UserService userService;

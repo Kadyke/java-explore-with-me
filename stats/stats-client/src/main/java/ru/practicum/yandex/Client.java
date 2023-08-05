@@ -1,11 +1,8 @@
 package ru.practicum.yandex;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,10 +13,8 @@ import java.util.Map;
 public class Client {
     private final RestTemplate rest;
 
-    public Client(String serviceUrl) {
-        RestTemplateBuilder builder = new RestTemplateBuilder();
-        this.rest = builder.uriTemplateHandler(new DefaultUriBuilderFactory(serviceUrl))
-                .requestFactory(HttpComponentsClientHttpRequestFactory::new).build();
+    public Client(RestTemplate rest) {
+        this.rest = rest;
     }
 
     public ResponseEntity<Object> saveHit(HitDto hitDto) {

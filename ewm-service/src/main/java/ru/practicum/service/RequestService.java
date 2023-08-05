@@ -1,6 +1,7 @@
 package ru.practicum.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.ResponseToRequest;
 import ru.practicum.dto.ResponseToRequestResult;
 import ru.practicum.exception.NotFoundException;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class RequestService {
     private final RequestRepository repository;
     private final UserService userService;

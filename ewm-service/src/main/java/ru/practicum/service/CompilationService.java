@@ -2,6 +2,7 @@ package ru.practicum.service;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.repository.CompilationRepository;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.model.Compilation;
@@ -11,6 +12,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toSet;
 
 @Service
+@Transactional(readOnly = true)
 public class CompilationService {
     private final CompilationRepository repository;
     private final EventService eventService;

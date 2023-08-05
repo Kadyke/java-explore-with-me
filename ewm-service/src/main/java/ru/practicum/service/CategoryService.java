@@ -1,5 +1,6 @@
 package ru.practicum.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -9,9 +10,11 @@ import ru.practicum.repository.CategoryRepository;
 import ru.practicum.exception.CategoryAlreadyExistException;
 import ru.practicum.exception.NotFoundException;
 
+
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class CategoryService {
     private final CategoryRepository repository;
 

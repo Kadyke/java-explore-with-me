@@ -2,7 +2,9 @@ package ru.practicum.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventShortDto;
 import ru.practicum.yandex.Client;
@@ -15,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 @Slf4j
-@Component
+@Service
 public class StatsClient {
     private final Client client;
 
