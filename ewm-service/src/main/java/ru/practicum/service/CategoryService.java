@@ -1,5 +1,6 @@
 package ru.practicum.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,7 +15,6 @@ import ru.practicum.exception.NotFoundException;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 public class CategoryService {
     private final CategoryRepository repository;
 
@@ -22,7 +22,6 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    @Transactional
     public Category createCategory(Category category) {
         try {
             return repository.save(category);
@@ -31,7 +30,6 @@ public class CategoryService {
         }
     }
 
-    @Transactional
     public void deleteCategory(Long id) {
         try {
             repository.deleteById(id);
@@ -42,7 +40,6 @@ public class CategoryService {
         }
     }
 
-    @Transactional
     public Category changeCategory(Category category) {
         repository.findById(category.getId()).orElseThrow(NotFoundException::new);
         try {
@@ -52,10 +49,12 @@ public class CategoryService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Category getCategory(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<Category> getCategories(Integer from, Integer size) {
         return repository.findByLimitAndOffset(size, from);
     }
