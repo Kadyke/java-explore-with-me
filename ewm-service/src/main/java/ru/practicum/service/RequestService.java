@@ -60,6 +60,7 @@ public class RequestService {
         return repository.findAllByRequester(user);
     }
 
+    @Transactional
     public Request cancelRequest(Long userId, Long id) {
         User user = userService.getUser(userId);
         Request request = repository.findById(id).orElseThrow(NotFoundException::new);
@@ -82,6 +83,7 @@ public class RequestService {
         return repository.findByEvent(event);
     }
 
+    @Transactional
     public ResponseToRequestResult responseToRequest(Long userId, Long eventId, ResponseToRequest responseToRequest) {
         User user = userService.getUser(userId);
         Event event = eventService.getEvent(eventId);

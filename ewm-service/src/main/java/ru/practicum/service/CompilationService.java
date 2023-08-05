@@ -22,7 +22,7 @@ public class CompilationService {
         this.eventService = eventService;
     }
 
-
+    @Transactional
     public Compilation createCompilation(Compilation compilation) {
         if (compilation.getEvents() != null) {
             compilation.setEvents(compilation.getEvents().stream().map(
@@ -31,6 +31,7 @@ public class CompilationService {
         return repository.save(compilation);
     }
 
+    @Transactional
     public void deleteCompilation(Long id) {
         try {
             repository.deleteById(id);
@@ -39,7 +40,8 @@ public class CompilationService {
         }
     }
 
-    public Compilation upadteCompilation(Compilation compilation, Long id) {
+    @Transactional
+    public Compilation updateCompilation(Compilation compilation, Long id) {
         Compilation oldCompilation = repository.findById(id).orElseThrow(NotFoundException::new);
         oldCompilation.update(compilation);
         return repository.save(oldCompilation);

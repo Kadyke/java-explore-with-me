@@ -36,6 +36,7 @@ public class EventService {
         this.categoryService = categoryService;
     }
 
+    @Transactional
     public Event createEvent(Event event, Long userId) {
         event.setInitiator(userService.getUser(userId));
         event.setCreatedOn(LocalDateTime.now());
@@ -55,6 +56,7 @@ public class EventService {
         return repository.findByIdAndInitiator(id, user).orElseThrow(NotFoundException::new);
     }
 
+    @Transactional
     public Event updateEventByUser(Long userId, Long id, Event event) {
         User user = userService.getUser(userId);
         Event oldEvent = repository.findById(id).orElseThrow(NotFoundException::new);
@@ -85,6 +87,7 @@ public class EventService {
 
     }
 
+    @Transactional
     public Event updateEventByAdmin(Long id, Event event) {
         Event oldEvent = repository.findById(id).orElseThrow(NotFoundException::new);
         if (oldEvent.getState() != State.PENDING) {
@@ -113,14 +116,17 @@ public class EventService {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    @Transactional
     void increaseConfirmedRequest(Long id) {
         repository.increaseConfirmedRequest(id);
     }
 
+    @Transactional
     void decreaseConfirmedRequest(Long id) {
         repository.decreaseConfirmedRequest(id);
     }
 
+    @Transactional
     void saveEvent(Event event) {
         repository.save(event);
     }

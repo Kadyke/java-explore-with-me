@@ -22,6 +22,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    @Transactional
     public Category createCategory(Category category) {
         try {
             return repository.save(category);
@@ -30,6 +31,7 @@ public class CategoryService {
         }
     }
 
+    @Transactional
     public void deleteCategory(Long id) {
         try {
             repository.deleteById(id);
@@ -40,6 +42,7 @@ public class CategoryService {
         }
     }
 
+    @Transactional
     public Category changeCategory(Category category) {
         repository.findById(category.getId()).orElseThrow(NotFoundException::new);
         try {

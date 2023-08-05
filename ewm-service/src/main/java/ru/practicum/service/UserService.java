@@ -21,6 +21,7 @@ public class UserService {
         this.repository = repository;
     }
 
+    @Transactional
     public User createUser(User user) {
         try {
             return repository.save(user);
@@ -29,6 +30,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         try {
             repository.deleteById(id);
