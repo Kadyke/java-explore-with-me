@@ -4,21 +4,27 @@ import org.springframework.http.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Client {
     private final RestTemplate rest;
 
-    public Client(RestTemplate restTemplate) {
-        this.rest = restTemplate;
+    public Client(RestTemplate rest) {
+        this.rest = rest;
     }
 
     public ResponseEntity<Object> saveHit(HitDto hitDto) {
         return makeAndSendRequest(HttpMethod.POST, "/hit", hitDto, null);
     }
 
-    public ResponseEntity<Object> getStats(Map<String, Object> parameters, List<String> uris) {
+    public ResponseEntity<Object> getStats(LocalDateTime end, LocalDateTime start, List<String> uris, Boolean unique) {
+        Map<String, Object> parameters = new HashMap<>(Map.of("end",
+                end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                "start", start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), "unique", unique));
         String path = "/stats?end={end}&start={start}&unique={unique}";
         if (uris != null) {
             Integer index = 0;
