@@ -23,7 +23,7 @@
 							"pm.test(\"Test user 'id' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('id');\r",
-							"    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 136').to.eql(136);\r",
 							"});\r",
 							"pm.test(\"Test user 'email' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
@@ -84,7 +84,7 @@
 							"pm.test(\"Test user 'id' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('id');\r",
-							"    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 121').to.eql(121);\r",
 							"});\r",
 							"pm.test(\"Test user 'name' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
@@ -158,7 +158,7 @@
 							"pm.test(\"Test user 'id' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('id');\r",
-							"    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 106').to.eql(106);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -170,7 +170,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+					"raw": "{\r\n  \"annotation\": \"Уникальная аннотация 1234\",\r\n  \"category\": 121,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -178,7 +178,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/events",
+					"raw": "http://localhost:8080/users/136/events",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,7 +186,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events"
 					]
 				}
@@ -212,7 +212,7 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events/1/like?isLiked=true",
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -220,9 +220,9 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events",
-						"1",
+						"106",
 						"like"
 					],
 					"query": [
@@ -290,7 +290,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/events/1",
+					"raw": "http://localhost:8080/admin/events/106",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -299,7 +299,7 @@
 					"path": [
 						"admin",
 						"events",
-						"1"
+						"106"
 					]
 				}
 			},
@@ -345,7 +345,7 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events/1/like?isLiked=true",
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -353,9 +353,9 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events",
-						"1",
+						"106",
 						"like"
 					],
 					"query": [
@@ -408,7 +408,7 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events/1/like?isLiked=true",
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -416,9 +416,9 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events",
-						"1",
+						"106",
 						"like"
 					],
 					"query": [
@@ -471,7 +471,7 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events/1/like?isLiked=false",
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=false",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -479,9 +479,9 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events",
-						"1",
+						"106",
 						"like"
 					],
 					"query": [
@@ -542,7 +542,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/events/1",
+					"raw": "http://localhost:8080/events/106",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -550,7 +550,7 @@
 					"port": "8080",
 					"path": [
 						"events",
-						"1"
+						"106"
 					]
 				}
 			},
@@ -600,7 +600,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/events",
+					"raw": "http://localhost:8080/events?text=Уникальная аннотация 1234",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -637,8 +637,7 @@
 						},
 						{
 							"key": "text",
-							"value": "GJ",
-							"disabled": true
+							"value": "Уникальная аннотация 1234"
 						},
 						{
 							"key": "paid",
@@ -698,7 +697,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events/1",
+					"raw": "http://localhost:8080/users/136/events/106",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -706,9 +705,9 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events",
-						"1"
+						"106"
 					]
 				}
 			},
@@ -758,7 +757,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/1/events",
+					"raw": "http://localhost:8080/users/136/events",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -766,7 +765,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events"
 					]
 				}
@@ -790,7 +789,7 @@
 							"pm.test(\"Test user 'id' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('id');\r",
-							"    pm.expect(jsonData.id, '\"id\" must be 2').to.eql(2);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 137').to.eql(137);\r",
 							"});\r",
 							"pm.test(\"Test user 'email' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
@@ -869,7 +868,7 @@
 							"pm.test(\"Test user 'id' field\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).to.have.property('id');\r",
-							"    pm.expect(jsonData.id, '\"id\" must be 2').to.eql(2);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 107').to.eql(107);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -889,7 +888,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/events",
+					"raw": "http://localhost:8080/users/136/events",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -897,7 +896,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"136",
 						"events"
 					]
 				}
@@ -959,7 +958,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/events/2",
+					"raw": "http://localhost:8080/admin/events/107",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -968,7 +967,7 @@
 					"path": [
 						"admin",
 						"events",
-						"2"
+						"107"
 					]
 				}
 			},
@@ -1014,7 +1013,7 @@
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/2/events/2/like?isLiked=true",
+					"raw": "http://localhost:8080/users/2/events/107/like?isLiked=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1024,7 +1023,7 @@
 						"users",
 						"2",
 						"events",
-						"2",
+						"107",
 						"like"
 					],
 					"query": [
@@ -1075,7 +1074,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/events?sort=LIKES",
+					"raw": "http://localhost:8080/events?sort=LIKES&text=Уникальная аннотация 1234",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1111,8 +1110,7 @@
 						},
 						{
 							"key": "text",
-							"value": "GJ",
-							"disabled": true
+							"value": "Уникальная аннотация 1234"
 						},
 						{
 							"key": "paid",
