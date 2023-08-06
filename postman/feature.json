@@ -880,7 +880,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"второе событие\"\r\n}",
+					"raw": "{\r\n  \"annotation\": \"Уникальная аннотация 1234\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"второе событие\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1057,13 +1057,13 @@
 							"    pm.expect(jsonData).to.have.property('dislikes');\r",
 							"    pm.expect(jsonData.likes, '\"likes\" must be \"1\"').to.eql(1);\r",
 							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"0\"').to.eql(0);\r",
-							"    pm.expect(jsonData.id, '\"id\" must be \"2\"').to.eql(2);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be \"107\"').to.eql(107);\r",
 							"    var jsonData1 = pm.response.json()[1];\r",
 							"    pm.expect(jsonData1).to.have.property('likes');\r",
 							"    pm.expect(jsonData1).to.have.property('dislikes');\r",
 							"    pm.expect(jsonData1.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
 							"    pm.expect(jsonData1.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
-							"    pm.expect(jsonData1.id, '\"id\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData1.id, '\"id\" must be \"106\"').to.eql(106);\r",
 							"});"
 						],
 						"type": "text/javascript"
