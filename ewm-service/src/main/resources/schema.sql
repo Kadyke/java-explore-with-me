@@ -47,3 +47,10 @@ CREATE TABLE IF NOT EXISTS requests (
 	user_id BIGINT NOT NULL REFERENCES users(id),
     status VARCHAR(10)
 );
+
+CREATE TABLE IF NOT EXISTS likes (
+	event_id BIGINT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+	user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	is_liked BOOLEAN,
+	CONSTRAINT pk1 PRIMARY KEY (event_id, user_id)
+);

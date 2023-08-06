@@ -12,7 +12,10 @@ import ru.practicum.service.RequestService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping(path = "/events")
@@ -56,9 +59,25 @@ public class PublicEventController {
             throw new BadRequestException("Дата начала не может быть позже даты конца.");
         }
         client.sendHit("/events", request);
-        List<EventShortDto> eventShortDtos =  eventService.getPublicEvents(text, categories, paid, onlyAvailable, sort,
-                rangeStart, rangeEnd, from, size);
+        List<EventShortDto> eventShortDtos =  EventMapper.INSTANCE.collectionToEventShortDto(
+                eventService.getPublicEvents(text, categories, paid, onlyAvailable, sort, rangeStart, rangeEnd, from,
+                        size));
         client.addViewsForEventShortDto(eventShortDtos);
+        switch (sort) {
+            case VIEWS:
+                eventShortDtos = eventShortDtos.stream().sorted(
+                        (o1, o2) -> {
+                            if (o1.getViews() == null) {
+                                return 0;
+                            }
+                            return Integer.parseInt(Long.toString(o1.getViews() - o2.getViews()));
+                        }).collect(toList());
+                break;
+            case LIKES:
+                eventShortDtos = eventShortDtos.stream().sorted(
+                        Comparator.comparingInt(o -> (o.getDislikes() - o.getLikes()))).collect(toList());
+                break;
+        }
         return eventShortDtos;
     }
 

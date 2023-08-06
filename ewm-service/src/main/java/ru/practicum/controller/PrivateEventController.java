@@ -6,6 +6,7 @@ import ru.practicum.client.StatsClient;
 import ru.practicum.dto.*;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.mapper.RequestMapper;
+import ru.practicum.model.Event;
 import ru.practicum.service.EventService;
 import ru.practicum.service.RequestService;
 
@@ -69,5 +70,10 @@ public class PrivateEventController {
     public ResponseToRequestResult responseToRequest(@PathVariable Long userId, @PathVariable Long id,
                                                @RequestBody @Valid ResponseToRequest responseToRequest) {
         return requestService.responseToRequest(userId, id, responseToRequest);
+    }
+
+    @PatchMapping("/{id}/like")
+    public EventShortDto addLike(@PathVariable Long userId, @PathVariable Long id, @RequestParam Boolean isLiked) {
+        return EventMapper.INSTANCE.toEventShortDto(eventService.addLike(userId, id, isLiked));
     }
 }
