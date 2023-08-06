@@ -6,7 +6,6 @@ import ru.practicum.client.StatsClient;
 import ru.practicum.dto.*;
 import ru.practicum.mapper.EventMapper;
 import ru.practicum.mapper.RequestMapper;
-import ru.practicum.model.Event;
 import ru.practicum.service.EventService;
 import ru.practicum.service.RequestService;
 

@@ -18,5 +18,6 @@ public class Like {
     @EmbeddedId
     private LikeId likeId;
     @Column(name = "is_liked")
-    private Boolean IsLiked;
+    private Boolean isLiked;
 }
+
