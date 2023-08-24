@@ -42,6 +42,10 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private State state;
     private String title;
+    @Transient
+    private Integer likes;
+    @Transient
+    private Integer dislikes;
 
     public Event update(Event event) {
         if (event.getAnnotation() != null) {

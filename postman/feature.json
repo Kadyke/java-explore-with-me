@@ -1,0 +1,1126 @@
+{
+	"info": {
+		"_postman_id": "1405fec9-e1d4-4fdb-8f6b-75a2103ce03d",
+		"name": "Feature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25861432"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test user 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 136').to.eql(136);\r",
+							"});\r",
+							"pm.test(\"Test user 'email' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('email');\r",
+							"    pm.expect(jsonData.email, '\"email\" must be \"user@user.com\"').to.eql('vasy@mail.ru');\r",
+							"});\r",
+							"pm.test(\"Test user 'name' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData.name, '\"name\" must be \"user\"').to.eql('vasy');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"vasy\",\r\n  \"email\": \"vasy@mail.ru\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test user 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 121').to.eql(121);\r",
+							"});\r",
+							"pm.test(\"Test user 'name' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData.name, '\"name\" must be \"user\"').to.eql('krasota');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"krasota\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 106').to.eql(106);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"annotation\": \"Уникальная аннотация 1234\",\r\n  \"category\": 121,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/136/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like to be Conflict",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events",
+						"106",
+						"like"
+					],
+					"query": [
+						{
+							"key": "isLiked",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Event Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'state' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('state');\r",
+							"    pm.expect(jsonData.state, '\"state\" must be \"PUBLISHED\"').to.eql('PUBLISHED');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/events/106",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"events",
+						"106"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like to be Ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"0\"').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events",
+						"106",
+						"like"
+					],
+					"query": [
+						{
+							"key": "isLiked",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like to be no changes likes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"0\"').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events",
+						"106",
+						"like"
+					],
+					"query": [
+						{
+							"key": "isLiked",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dislike to be Ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events/106/like?isLiked=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events",
+						"106",
+						"like"
+					],
+					"query": [
+						{
+							"key": "isLiked",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET public event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/events/106",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events",
+						"106"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events Public",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/events?text=Уникальная аннотация 1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events"
+					],
+					"query": [
+						{
+							"key": "categories",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "rangeStart",
+							"value": "2020-12-31 15:10:05",
+							"disabled": true
+						},
+						{
+							"key": "rangeEnd",
+							"value": "2026-12-31 15:10:05",
+							"disabled": true
+						},
+						{
+							"key": "onlyAvailable",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "EVENT_DATE",
+							"disabled": true
+						},
+						{
+							"key": "text",
+							"value": "Уникальная аннотация 1234"
+						},
+						{
+							"key": "paid",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Event Private",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events/106",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events",
+						"106"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events Private",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/136/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test user 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 137').to.eql(137);\r",
+							"});\r",
+							"pm.test(\"Test user 'email' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('email');\r",
+							"    pm.expect(jsonData.email, '\"email\" must be \"masha@mail.ru\"').to.eql('masha@mail.ru');\r",
+							"});\r",
+							"pm.test(\"Test user 'name' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData.name, '\"name\" must be \"masha\"').to.eql('masha');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"masha\",\r\n  \"email\": \"masha@mail.ru\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id, '\"id\" must be 107').to.eql(107);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"annotation\": \"Уникальная аннотация 1234\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"второе событие\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/136/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"136",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Event Admin Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('participantLimit');\r",
+							"pm.expect(jsonData).to.have.property('state');\r",
+							"pm.expect(jsonData).to.have.property('createdOn');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"pm.expect(jsonData).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'state' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('state');\r",
+							"    pm.expect(jsonData.state, '\"state\" must be \"PUBLISHED\"').to.eql('PUBLISHED');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/events/107",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"events",
+						"107"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like to be Ok Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData).to.have.property('id');\r",
+							"pm.expect(jsonData).to.have.property('title');\r",
+							"pm.expect(jsonData).to.have.property('annotation');\r",
+							"pm.expect(jsonData).to.have.property('category');\r",
+							"pm.expect(jsonData).to.have.property('paid');\r",
+							"pm.expect(jsonData).to.have.property('eventDate');\r",
+							"pm.expect(jsonData).to.have.property('initiator');\r",
+							"pm.expect(jsonData).to.have.property('description');\r",
+							"pm.expect(jsonData).to.have.property('location');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"0\"').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/2/events/107/like?isLiked=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"2",
+						"events",
+						"107",
+						"like"
+					],
+					"query": [
+						{
+							"key": "isLiked",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events Public Sort By Likes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Has user create response\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test user 'likes' field\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"    pm.expect(jsonData).to.have.property('likes');\r",
+							"    pm.expect(jsonData).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData.likes, '\"likes\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData.dislikes, '\"dislikes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData.id, '\"id\" must be \"107\"').to.eql(107);\r",
+							"    var jsonData1 = pm.response.json()[1];\r",
+							"    pm.expect(jsonData1).to.have.property('likes');\r",
+							"    pm.expect(jsonData1).to.have.property('dislikes');\r",
+							"    pm.expect(jsonData1.likes, '\"likes\" must be \"0\"').to.eql(0);\r",
+							"    pm.expect(jsonData1.dislikes, '\"dislikes\" must be \"1\"').to.eql(1);\r",
+							"    pm.expect(jsonData1.id, '\"id\" must be \"106\"').to.eql(106);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/events?sort=LIKES&text=Уникальная аннотация 1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events"
+					],
+					"query": [
+						{
+							"key": "categories",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "rangeStart",
+							"value": "2020-12-31 15:10:05",
+							"disabled": true
+						},
+						{
+							"key": "rangeEnd",
+							"value": "2026-12-31 15:10:05",
+							"disabled": true
+						},
+						{
+							"key": "onlyAvailable",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "LIKES"
+						},
+						{
+							"key": "text",
+							"value": "Уникальная аннотация 1234"
+						},
+						{
+							"key": "paid",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -64,5 +64,11 @@ public class ExceptionController {
     public ApiError handleEventIsNotPendingException(final EventIsNotPendingException e) {
         return new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleEventIsNotPublishedException(final EventIsNotPublishedException e) {
+        return new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e.getMessage(), LocalDateTime.now());
+    }
 }
 

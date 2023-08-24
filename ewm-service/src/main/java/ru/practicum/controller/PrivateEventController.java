@@ -70,4 +70,9 @@ public class PrivateEventController {
                                                @RequestBody @Valid ResponseToRequest responseToRequest) {
         return requestService.responseToRequest(userId, id, responseToRequest);
     }
+
+    @PatchMapping("/{id}/like")
+    public EventShortDto addLike(@PathVariable Long userId, @PathVariable Long id, @RequestParam Boolean isLiked) {
+        return EventMapper.INSTANCE.toEventShortDto(eventService.addLike(userId, id, isLiked));
+    }
 }

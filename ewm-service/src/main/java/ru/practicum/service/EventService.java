@@ -2,38 +2,29 @@ package ru.practicum.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.dto.EventShortDto;
-import ru.practicum.exception.EventIsNotPendingException;
-import ru.practicum.mapper.EventMapper;
-import ru.practicum.model.Sort;
-import ru.practicum.exception.EventAlreadyPublishedException;
-import ru.practicum.exception.EventDateException;
-import ru.practicum.exception.NotFoundException;
-import ru.practicum.model.Event;
-import ru.practicum.model.State;
-import ru.practicum.model.User;
+import ru.practicum.exception.*;
+import ru.practicum.model.*;
 import ru.practicum.repository.EventRepository;
+import ru.practicum.repository.LikeRepository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional(readOnly = true)
 public class EventService {
-    private final EventRepository repository;
+    private final EventRepository eventRepository;
     private final UserService userService;
     private final CategoryService categoryService;
-    private final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final LikeRepository likeRepository;
 
-    public EventService(EventRepository repository, UserService userService, CategoryService categoryService) {
-        this.repository = repository;
+    public EventService(EventRepository eventRepository, UserService userService, CategoryService categoryService, LikeRepository likeRepository) {
+        this.eventRepository = eventRepository;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.likeRepository = likeRepository;
     }
 
     @Transactional
@@ -43,23 +34,33 @@ public class EventService {
         event.setCategory(categoryService.getCategory(event.getCategory().getId()));
         event.setConfirmedRequests(0);
         event.setState(State.PENDING);
-        return repository.save(event);
+        return eventRepository.save(event);
     }
 
     public List<Event> getUsersEvents(Long userId, Integer from, Integer size) {
         userService.getUser(userId);
-        return repository.findByUserId(userId, size, from);
+        List<Event> events = eventRepository.findByUserId(userId, size, from);
+        for (Event event : events) {
+            if (event.getState() == State.PUBLISHED) {
+                setLikes(event);
+            }
+        }
+        return events;
     }
 
     public Event getUsersEvent(Long userId, Long id) {
         User user = userService.getUser(userId);
-        return repository.findByIdAndInitiator(id, user).orElseThrow(NotFoundException::new);
+        Event event = eventRepository.findByIdAndInitiator(id, user).orElseThrow(NotFoundException::new);
+        if (event.getState() == State.PUBLISHED) {
+            setLikes(event);
+        }
+        return event;
     }
 
     @Transactional
     public Event updateEventByUser(Long userId, Long id, Event event) {
         User user = userService.getUser(userId);
-        Event oldEvent = repository.findById(id).orElseThrow(NotFoundException::new);
+        Event oldEvent = eventRepository.findById(id).orElseThrow(NotFoundException::new);
         if (!user.equals(oldEvent.getInitiator())) {
             throw new NotFoundException();
         }
@@ -72,7 +73,7 @@ public class EventService {
             event.setCategory(null);
         }
         oldEvent.update(event);
-        return repository.save(oldEvent);
+        return eventRepository.save(oldEvent);
     }
 
     public List<Event> getEvents(List<Long> users, List<State> states, List<Long> categories, Integer from,
@@ -83,13 +84,13 @@ public class EventService {
                 statesInString.add(state.toString());
             }
         }
-        return repository.getEvents(users, size, categories, from, statesInString, rangeStart, rangeEnd);
+        return eventRepository.getEvents(users, size, categories, from, statesInString, rangeStart, rangeEnd);
 
     }
 
     @Transactional
     public Event updateEventByAdmin(Long id, Event event) {
-        Event oldEvent = repository.findById(id).orElseThrow(NotFoundException::new);
+        Event oldEvent = eventRepository.findById(id).orElseThrow(NotFoundException::new);
         if (oldEvent.getState() != State.PENDING) {
             throw new EventIsNotPendingException();
         }
@@ -106,32 +107,32 @@ public class EventService {
                 throw new EventDateException("Публикация не может быть позже более чем на час даты начала события.");
             }
             oldEvent.setPublishedOn(now);
-            return repository.save(oldEvent);
+            return eventRepository.save(oldEvent);
         }
         oldEvent.update(event);
-        return repository.save(oldEvent);
+        return eventRepository.save(oldEvent);
     }
 
     Event getEvent(Long id) {
-        return repository.findById(id).orElseThrow(NotFoundException::new);
+        return eventRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Transactional
     void increaseConfirmedRequest(Long id) {
-        repository.increaseConfirmedRequest(id);
+        eventRepository.increaseConfirmedRequest(id);
     }
 
     @Transactional
     void decreaseConfirmedRequest(Long id) {
-        repository.decreaseConfirmedRequest(id);
+        eventRepository.decreaseConfirmedRequest(id);
     }
 
     @Transactional
     void saveEvent(Event event) {
-        repository.save(event);
+        eventRepository.save(event);
     }
 
-    public List<EventShortDto> getPublicEvents(String text, List<Long> categories, Boolean paid, Boolean onlyAvailable,
+    public List<Event> getPublicEvents(String text, List<Long> categories, Boolean paid, Boolean onlyAvailable,
                                                Sort sort, LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from,
                                                Integer size) {
         if (text != null) {
@@ -139,26 +140,38 @@ public class EventService {
         }
         List<Event> events;
         if (onlyAvailable) {
-            events = repository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories,
+            events = eventRepository.getPublicEventsOnlyAvailableSortByDate(text, paid, categories,
                     rangeStart, rangeEnd,
                     size, from);
         } else {
-            events = repository.getPublicEventsSortByDate(text, paid, categories, rangeStart,
+            events = eventRepository.getPublicEventsSortByDate(text, paid, categories, rangeStart,
                     rangeEnd, size, from);
         }
-        if (sort.equals(Sort.VIEWS)) {
-            return EventMapper.INSTANCE.collectionToEventShortDto(events).stream().sorted(
-                    (o1, o2) -> {
-                        if (o1.getViews() == null) {
-                            return 0;
-                        }
-                        return Integer.parseInt(Long.toString(o1.getViews() - o2.getViews()));
-                    }).collect(toList());
+        for (Event event: events) {
+            setLikes(event);
         }
-        return EventMapper.INSTANCE.collectionToEventShortDto(events);
+        return events;
     }
 
     public Event getPublicEvent(Long id) {
-        return repository.findByIdAndState(id, State.PUBLISHED).orElseThrow(NotFoundException::new);
+        return setLikes(eventRepository.findByIdAndState(id, State.PUBLISHED).orElseThrow(NotFoundException::new));
+    }
+
+    @Transactional
+    public Event addLike(Long userId, Long id, Boolean isLiked) {
+        User user = userService.getUser(userId);
+        Event event = eventRepository.findById(id).orElseThrow(NotFoundException::new);
+        if (event.getState() != State.PUBLISHED) {
+            throw new EventIsNotPublishedException();
+        }
+        Like like = new Like(new LikeId(userId, id), isLiked);
+        likeRepository.save(like);
+        return setLikes(event);
+    }
+
+    private Event setLikes(Event event) {
+        event.setLikes(likeRepository.findByEventIdAndIsLiked(event.getId(), true).size());
+        event.setDislikes(likeRepository.findByEventIdAndIsLiked(event.getId(), false).size());
+        return event;
     }
 }
